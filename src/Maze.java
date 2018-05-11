@@ -247,5 +247,12 @@ public class Maze {
 	}
 
 
+	public Cell getCell(int i, int j) {
+		return contents[i][j];
+	}
+	
+	public Cell[][] getContents(){
+		return contents;
+	}
 
 }
