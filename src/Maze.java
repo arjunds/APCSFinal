@@ -19,12 +19,19 @@ public class Maze {
 	private Cell[][] contents;
 
 	public Maze (int w, int h) {
-		contents = new Cell[w/10][h/10];
+		contents = new Cell[w][h];
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents[0].length; j++) {
 				contents[i][j] = new Cell(true, true, true, true, i, j);
 			}
 		}
+		//this.scrambleMaze();
+	}
+
+
+	public Maze (String filename, int w, int h) {
+		contents = new Cell[w][h];
+		readMaze(filename);
 	}
 
 	/*
@@ -93,24 +100,21 @@ public class Maze {
 		}
 
 	}
-	
-	public void readMaze(String filename) {
-		Scanner scan = null;		
-		try {
 
+	public void readMaze(String filename) {
+
+		BufferedReader bReader = null;
+		try {
 			FileReader reader = new FileReader(filename);
-			BufferedReader bReader = new BufferedReader(reader);
-			scan = new Scanner(bReader);
-			
+			bReader = new BufferedReader(reader);
+
+
 			int x = 0;
 			int y = 0;
-			
-			while (scan.hasNextLine()) {
-				String line = scan.nextLine();
+			String line;
+			while ((line = bReader.readLine()) != null) {
 
-				Scanner lineScan = new Scanner(line);
-				while(lineScan.hasNext()) {
-					System.out.println(line.indexOf(' '));
+				while (line.indexOf(' ') != -1) {
 					String curr = line.substring(0, line.indexOf(' '));
 					line = line.substring(line.indexOf(' ') + 1);
 					boolean up, down, left, right;
@@ -136,15 +140,16 @@ public class Maze {
 					}
 					contents[x][y] = new Cell(up, down, right, left, x, y);
 				}
-				lineScan.close();
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			
-			if (scan != null)
-				scan.close();
+			try {
+				if (bReader != null)
+					bReader.close();
+			} catch (IOException exception) {
+				throw new IllegalArgumentException("you've really done it this time");
+			}
 		}	
 
 	}
