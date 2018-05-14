@@ -25,12 +25,17 @@ public class Maze {
 				contents[i][j] = new Cell(true, true, true, true, i, j);
 			}
 		}
-		//this.scrambleMaze();
+		this.scrambleMaze();
 	}
 
 
 	public Maze (String filename, int w, int h) {
 		contents = new Cell[w][h];
+		for (int i = 0; i < contents.length; i++) {
+			for (int j = 0; j < contents[0].length; j++) {
+				contents[i][j] = new Cell(true, true, true, true, i, j);
+			}
+		}
 		readMaze(filename);
 	}
 

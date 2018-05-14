@@ -1,4 +1,9 @@
+
+import java.awt.event.KeyEvent;
+
 import processing.core.PApplet;
+
+
 
 /**
  * 
@@ -7,20 +12,32 @@ import processing.core.PApplet;
  */
 public class DrawingSurface extends PApplet {
 	
-	
-	Maze m;
+	PortalPair portals;
+	Character c;
 	
 	public DrawingSurface() {
-		m = new Maze(100,100);
-		m.scrambleMaze();
+		portals =  new PortalPair(25,50,75,50);
+		c = new Character(50,50);
 	}
 
 	public void draw() {
 		background((float)200);
-		m.draw(this);
-		
+		portals.draw(this);
+		portals.teleport(c);
+		c.draw(this);
 	}
-
+	
+	public void keyPressed() {
+		if (keyCode == KeyEvent.VK_UP) {
+			c.move(0,-2);
+		} else if (keyCode == KeyEvent.VK_DOWN) {
+			c.move(0, 2);
+		} else if (keyCode == KeyEvent.VK_LEFT) {
+			c.move(-2, 0);
+		} else if (keyCode == KeyEvent.VK_RIGHT) {
+			c.move(2, 0);
+		}
+	}
 
 
 }
