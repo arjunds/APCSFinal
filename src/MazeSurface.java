@@ -2,11 +2,11 @@ import java.awt.event.KeyEvent;
 
 import processing.core.PApplet;
 
-public class JunkSurface extends PApplet{
+public class MazeSurface extends PApplet{
 	
 	private Maze m;
 	
-	public JunkSurface() {
+	public MazeSurface() {
 		m = new Maze(50, 50);
 	}
 

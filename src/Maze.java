@@ -26,16 +26,20 @@ public class Maze {
 			}
 		}
 		this.scrambleMaze();
+		int startPoint = (int)(Math.random() * (contents[0].length -1)+ 0.5);
+		int endPoint = (int)(Math.random() * (contents[0].length-1) + 0.5);
+		contents[0][startPoint].hasWallLeft = false;
+		contents[contents.length - 1][endPoint].hasWallRight = false;
 	}
 
 
 	public Maze (String filename, int w, int h) {
 		contents = new Cell[w][h];
-		for (int i = 0; i < contents.length; i++) {
-			for (int j = 0; j < contents[0].length; j++) {
-				contents[i][j] = new Cell(true, true, true, true, i, j);
-			}
-		}
+//		for (int i = 0; i < contents.length; i++) {
+//			for (int j = 0; j < contents[0].length; j++) {
+//				contents[i][j] = new Cell(true, true, true, true, i, j);
+//			}
+//		}
 		readMaze(filename);
 	}
 
@@ -118,8 +122,7 @@ public class Maze {
 			int y = 0;
 			String line;
 			while ((line = bReader.readLine()) != null) {
-
-				while (line.indexOf(' ') != -1) {
+				while (line.indexOf(' ') != -1 && x < contents.length) {
 					String curr = line.substring(0, line.indexOf(' '));
 					line = line.substring(line.indexOf(' ') + 1);
 					boolean up, down, left, right;
@@ -143,8 +146,11 @@ public class Maze {
 					} else {
 						right = false;
 					}
-					contents[x][y] = new Cell(up, down, right, left, x, y);
+					contents[y][x] = new Cell(up, down, right, left, x, y);
+					x++;
 				}
+				x = 0;
+				y++;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -182,13 +188,6 @@ public class Maze {
 				cont = false;
 			}
 		}
-
-		Cell start = new Cell(contents[0][0]);
-		Cell end = new Cell(contents[contents.length - 1][contents[0].length - 1]);
-		start.hasWallLeft = false;
-		end.hasWallRight = false;
-		contents[0][0] = start;
-		contents[contents.length - 1][contents[0].length - 1] = end;
 
 	}
 

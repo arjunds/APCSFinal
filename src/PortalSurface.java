@@ -10,12 +10,12 @@ import processing.core.PApplet;
  * @author rmuzaffar862
  * This class initializes and draws a maze
  */
-public class DrawingSurface extends PApplet {
+public class PortalSurface extends PApplet {
 	
 	PortalPair portals;
 	Character c;
 	
-	public DrawingSurface() {
+	public PortalSurface() {
 		portals =  new PortalPair(25,50,75,50, 6, 20, 1, 2);
 		c = new Character(50,50);
 	}
