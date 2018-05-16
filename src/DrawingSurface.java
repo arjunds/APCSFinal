@@ -16,7 +16,7 @@ public class DrawingSurface extends PApplet {
 	Character c;
 	
 	public DrawingSurface() {
-		portals =  new PortalPair(25,50,75,50);
+		portals =  new PortalPair(25,50,75,50, 6, 20, 1, 2);
 		c = new Character(50,50);
 	}
 

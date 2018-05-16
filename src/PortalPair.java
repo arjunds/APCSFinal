@@ -8,54 +8,99 @@ import processing.core.PApplet;
  * 	is teleported as necessary.x
  */
 public class PortalPair {
-	
-	private int blueX, blueY, orangeX, orangeY;
-	
-	public PortalPair(int blueX, int blueY, int orangeX, int orangeY) {
 
+	private int blueX, blueY, orangeX, orangeY, height, width, bOrient, oOrient;
+
+	/*
+	 * orient:
+	 * 1 up
+	 * 2 down
+	 * 3 left
+	 * 4 right
+	 */
+	public PortalPair(int blueX, int blueY, int orangeX, int orangeY, int width, int height, int blueOrient, int orangeOrient) {
 		this.blueX = blueX;
 		this.blueY = blueY;
 		this.orangeX = orangeX;
 		this.orangeY = orangeY;
+		this.height = height;
+		this.width = width;
+		bOrient = blueOrient;
+		oOrient = orangeOrient;
 	}
-	
+
 	public void draw(PApplet p) {
-		p.stroke(255, 0, 0);
+		p.stroke(0, 0, 255);
 		p.strokeWeight(10);
 		p.line(blueX, blueY-10, blueX, blueY+10);
-		
+
 		p.stroke(255, 179, 0);
 		p.line(orangeX, orangeY-10, orangeX, orangeY+10);
 	}
-	
+
 	public boolean teleport(Character c) {
-		if (this.touchingBlue(c)) {
-			c.moveTo(orangeX + 5, orangeY + 5);
-			return true;
+		if (bOrient == 1) {
+			if (this.touchingBlue(c)) {
+				c.moveTo(orangeX, orangeY - height/2);
+				return true;
+			}
+		} else if (bOrient == 2) {
+			if (this.touchingBlue(c)) {
+				c.moveTo(orangeX, orangeY + height/2);
+				return true;
+			}
+		} else if (bOrient == 3) {
+			if (this.touchingBlue(c)) {
+				c.moveTo(orangeX - width/2, orangeY);
+				return true;
+			}
+		} else {
+			if (this.touchingBlue(c)) {
+				c.moveTo(orangeX + width/2, orangeY);
+				return true;
+			}
 		}
-		if (this.touchingOrange(c)) {
-			c.moveTo(blueX + 5, blueY + 5);
-			return true;
+		
+		if (oOrient == 1) {
+			if (this.touchingOrange(c)) {
+				c.moveTo(blueX, blueY - height/2);
+				return true;
+			}
+		} else if (oOrient == 2) {
+			if (this.touchingOrange(c)) {
+				c.moveTo(blueX, blueY + height/2);
+				return true;
+			}
+		} else if (oOrient == 3) {
+			if (this.touchingOrange(c)) {
+				c.moveTo(blueX - width/2, blueY);
+				return true;
+			}
+		} else {
+			if (this.touchingOrange(c)) {
+				c.moveTo(blueX + width/2, blueY);
+				return true;
+			}
 		}
 		return false;
 	}
-	
+
 	private boolean touchingBlue(Character c) {
 		int x = c.getX();
 		int y = c.getY();
-		if ((x < blueX + 2 && x > blueX - 2) && (y < blueY + 10 && y > blueY - 10))
+		if ((x < blueX + width/2 && x > blueX - width/2) && (y < blueY + height/2 && y > blueY - height/2))
 			return true;
 		return  false;
 	}
-	
+
 	private boolean touchingOrange(Character c) {
 		int x = c.getX();
 		int y = c.getY();
-		if ((x < orangeX + 2 && x > orangeX - 2) && (y < orangeY + 10 && y > orangeY - 10))
+		if ((x < orangeX + width/2 && x > orangeX - width/2) && (y < orangeY + height/2 && y > orangeY - height/2))
 			return true;
 		return  false;
 	}
-	
-	
-	
+
+
+
 }
