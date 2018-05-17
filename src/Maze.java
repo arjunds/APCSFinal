@@ -17,6 +17,7 @@ public class Maze {
 
 
 	private Cell[][] contents;
+	private int startPoint, endPoint;
 
 	public Maze (int w, int h) {
 		contents = new Cell[w][h];
@@ -26,8 +27,8 @@ public class Maze {
 			}
 		}
 		this.scrambleMaze();
-		int startPoint = (int)(Math.random() * (contents[0].length -1)+ 0.5);
-		int endPoint = (int)(Math.random() * (contents[0].length-1) + 0.5);
+		startPoint = (int)(Math.random() * (contents[0].length -1)+ 0.5);
+		endPoint = (int)(Math.random() * (contents[0].length-1) + 0.5);
 		contents[0][startPoint].hasWallLeft = false;
 		contents[contents.length - 1][endPoint].hasWallRight = false;
 	}
@@ -41,6 +42,14 @@ public class Maze {
 //			}
 //		}
 		readMaze(filename);
+	}
+	
+	public int getStart(){
+		return startPoint;
+	}
+	
+	public int getEnd(){
+		return endPoint;
 	}
 
 	/*
