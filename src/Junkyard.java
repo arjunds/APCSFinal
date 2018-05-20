@@ -6,8 +6,8 @@ public class Junkyard {
 //		Maze m = new Maze(10,10); 
 //		m.writeMaze("untitled");
 		Maze m = new Maze(10,10);
-		m.writeMaze("IAINTGONNASLEEPCAUSAYAAAAALL");
-		Maze n = new Maze("IAINTGONNASLEEPCAUSAYAAAAALL", 10, 10);
+		m.writeMaze("IAINTGOTNOSLEEPCAUSAYAAAAALL");
+		Maze n = new Maze("IAINTGOTNOSLEEPCAUSAYAAAAALL");
 		n.writeMaze("YALLNEVAGONNASLEEPCAUSAMEEEE");
 		
 	}

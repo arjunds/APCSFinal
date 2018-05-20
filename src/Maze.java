@@ -34,14 +34,67 @@ public class Maze {
 	}
 
 
-	public Maze (String filename, int w, int h) {
-		contents = new Cell[w][h];
-//		for (int i = 0; i < contents.length; i++) {
-//			for (int j = 0; j < contents[0].length; j++) {
-//				contents[i][j] = new Cell(true, true, true, true, i, j);
-//			}
-//		}
-		readMaze(filename);
+	public Maze (String filename) {
+
+		BufferedReader bReader = null;
+		try {
+			FileReader reader = new FileReader(filename);
+			bReader = new BufferedReader(reader);
+			int width = bReader.readLine().length()/5;
+			int height = 1;
+			while (bReader.readLine() != null) {
+				height ++;
+			}
+			System.out.println(width + " " + height);
+			contents = new Cell[width][height];
+			
+			int x = 0;
+			int y = 0;
+			String line;
+			reader = new FileReader(filename);
+			bReader = new BufferedReader(reader);
+			while ((line = bReader.readLine()) != null) {
+				while (line.indexOf(' ') != -1 && x < contents.length) {
+					String curr = line.substring(0, line.indexOf(' '));
+					line = line.substring(line.indexOf(' ') + 1);
+					boolean up, down, left, right;
+					if (curr.charAt(0) == '1') {
+						up = true;
+					} else {
+						up = false;
+					}
+					if (curr.charAt(1) == '1') {
+						down = true;
+					} else {
+						down = false;
+					}
+					if (curr.charAt(2) == '1') {
+						left = true;
+					} else {
+						left = false;
+					}
+					if (curr.charAt(3) == '1') {
+						right = true;
+					} else {
+						right = false;
+					}
+					contents[y][x] = new Cell(up, down, right, left, x, y);
+					x++;
+				}
+				x = 0;
+				y++;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bReader != null)
+					bReader.close();
+			} catch (IOException exception) {
+				throw new IllegalArgumentException("you've really done it this time");
+			}
+		}	
+
 	}
 	
 	public int getStart(){
@@ -84,6 +137,7 @@ public class Maze {
 		try {
 			writer = new FileWriter(filename);
 			bWriter = new BufferedWriter(writer);
+			
 			for (Cell[] arr : contents) {
 				for (Cell c : arr) {
 					if (c.hasWallUp)
@@ -116,61 +170,6 @@ public class Maze {
 				throw new IllegalArgumentException("Somthing went seriously wrong");
 			}
 		}
-
-	}
-
-	private void readMaze(String filename) {
-
-		BufferedReader bReader = null;
-		try {
-			FileReader reader = new FileReader(filename);
-			bReader = new BufferedReader(reader);
-
-
-			int x = 0;
-			int y = 0;
-			String line;
-			while ((line = bReader.readLine()) != null) {
-				while (line.indexOf(' ') != -1 && x < contents.length) {
-					String curr = line.substring(0, line.indexOf(' '));
-					line = line.substring(line.indexOf(' ') + 1);
-					boolean up, down, left, right;
-					if (curr.charAt(0) == '1') {
-						up = true;
-					} else {
-						up = false;
-					}
-					if (curr.charAt(1) == '1') {
-						down = true;
-					} else {
-						down = false;
-					}
-					if (curr.charAt(2) == '1') {
-						left = true;
-					} else {
-						left = false;
-					}
-					if (curr.charAt(3) == '1') {
-						right = true;
-					} else {
-						right = false;
-					}
-					contents[y][x] = new Cell(up, down, right, left, x, y);
-					x++;
-				}
-				x = 0;
-				y++;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (bReader != null)
-					bReader.close();
-			} catch (IOException exception) {
-				throw new IllegalArgumentException("you've really done it this time");
-			}
-		}	
 
 	}
 

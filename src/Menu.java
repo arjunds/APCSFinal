@@ -1,15 +1,77 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class Menu extends Panel{
+public class Menu{
 
+	private float oneX, oneY, twoX, twoY;
+	private int oneW, oneH, twoW, twoH;
+	String filename;
+	
+	public Menu (PApplet p, String fn) {
+		filename = fn;
+	}
 	
 	public void draw(PApplet p) {
-		PImage img;
-		img = p.loadImage("pengu.jpg");
-		//p.size(281, 388);
-		p.image(img, 0, 0, p.width, p.height);
+		loadBackground(filename, p);	
 		
+		oneX = p.width/2 - p.width/8;
+		oneY = p.height/4 - p.height/10;
+		oneW = p.width/4;
+		oneH = p.height/5;
+		twoX = p.width/2 - p.width/8;
+		twoY = p.height/4 * 3 - p.height/10;
+		twoW = p.width/4;
+		twoH = p.height/5;
+		
+		p.fill(255);	
+		if (checkMouse(1, p)) {
+			p.fill(125);
+		}
+		p.rect(oneX, oneY, oneW, oneH);
+		p.fill(255);		
+		if (checkMouse(2, p)) {
+			p.fill(125);
+		}
+		p.rect(twoX, twoY, twoW, twoH);
+	}
+
+	
+	/**
+	 * 
+	 * @return 0 for no button pressed, 1 for button one pressed, 2 for button two pressed
+	 */
+	public int mousePressed(PApplet p) {
+		if (checkMouse(1, p)) {
+			return 1;
+		}
+		if (checkMouse(2, p)) {
+			return 2;
+		}
+		return 0;
+	}
+	
+	private void loadBackground(String filename, PApplet p) {
+		PImage img = p.loadImage(filename);
+		p.image(img, 0, 0, p.width, p.height);
+	}
+	
+	private boolean checkMouse(int button, PApplet p) {
+		float x = -1, y = -1;
+		int w = -1, h = -1;
+		if (button == 1) {
+			x = oneX;
+			y = oneY;
+			w = oneW;
+			h = oneH;
+		} else if (button == 2) {
+			x = twoX;
+			y = twoY;
+			w = twoW;
+			h = twoH;
+		}
+		if (p.mouseX >= x && p.mouseX <= x + w && p.mouseY >= y && p.mouseY <= y + h)
+			return true;
+		return false;
 	}
 
 }
