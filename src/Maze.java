@@ -119,7 +119,7 @@ public class Maze {
 
 	}
 
-	public void readMaze(String filename) {
+	private void readMaze(String filename) {
 
 		BufferedReader bReader = null;
 		try {
