@@ -5,10 +5,7 @@ public class Junkyard {
 		// TODO Auto-generated method stub
 //		Maze m = new Maze(10,10); 
 //		m.writeMaze("untitled");
-		Maze d = new Maze(10, 10);
-		d.writeMaze("untitled2");
-		Maze a = new Maze("untitled2", 10, 10);
-		a.writeMaze("untitled");
+		Menu menu = new Menu();
 	}
 	
 }
