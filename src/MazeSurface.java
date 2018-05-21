@@ -7,12 +7,11 @@ public class MazeSurface extends PApplet{
 	private Maze m;
 	
 	public MazeSurface() {
-		m = new Maze(50, 50);
+		m = new Maze("IAINTGOTNOSLEEPCAUSAYAAAAALL");
 	}
 
 	public void draw() {
 		background((float)200);
-		m.scrambleMaze();
 		m.draw(this);
 	}
 	

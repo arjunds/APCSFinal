@@ -54,7 +54,7 @@ public class Maze {
 			reader = new FileReader(filename);
 			bReader = new BufferedReader(reader);
 			while ((line = bReader.readLine()) != null) {
-				while (line.indexOf(' ') != -1 && y < contents.length) {
+				while (line.indexOf(' ') != -1 && x < contents.length) {
 					String curr = line.substring(0, line.indexOf(' '));
 					line = line.substring(line.indexOf(' ') + 1);
 					boolean up, down, left, right;
@@ -79,11 +79,11 @@ public class Maze {
 						right = false;
 					}
 					contents[x][y] = new Cell(up, down, right, left, x, y);
-					y++;
 					if (!left && x == 0)
 						startPoint = y;
-					if (!right && x == contents[0].length - 1)
+					if (!right && x == contents.length - 1)
 						endPoint = y;
+					y++;
 				}
 				y = 0;
 				x++;
