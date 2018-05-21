@@ -1,10 +1,9 @@
 import processing.core.PApplet;
-import processing.core.PImage;
 
 public class Options{
 
-	private float musX, musY, twoX, twoY;
-	private int musW, musH, twoW, twoH;
+	private float musX, musY, volX, volY;
+	private int musW, musH, volW, volH;
 	String filename;
 	public boolean music;
 	
@@ -12,18 +11,23 @@ public class Options{
 		music = true;
 	}
 	
+	public void setup(PApplet p) {
+		volX = p.width/2 + (p.width/20 - (p.width/20 + volW)/2);
+	}
+	
 	public void draw(PApplet p) {
 		p.background(0, 255, 0);
 		p.textSize(p.width/20);
+		p.strokeWeight(1);
+		float height = (float) (p.textAscent() * 0.8);
 		
-		float w = p.textWidth("Music: ");
-		float h = (float) (p.textAscent() * 0.8);
+		float musicW = p.textWidth("Music: ");
 		musW = p.width/20;
 		musH = p.width/20;
-		musX = p.width/2 + (w - (w + musW)/2);
+		musX = p.width/2 + (musicW - (musicW + musW)/2);
 		musY = 0;
 		p.fill(125);
-		p.text("Music: ", p.width/2 - (w + musW)/2, h);
+		p.text("Music: ", p.width/2 - (musicW + musW)/2, height);
 		if (checkMouse(1, p))
 			p.fill(125);
 		else 
@@ -31,23 +35,37 @@ public class Options{
 		p.rect(musX, musY, musW, musH);
 		if (music) {
 			p.fill(0);
-			p.strokeWeight(10);
+			p.strokeWeight(5);
 			p.line(musX, musY, musX + musW, musY + musH);
 			p.line(musX, musY + musH, musX + musW, musY);
 		}
 
-		twoX = p.width/2 - p.width/8;
-		twoY = p.height/4 * 3 - p.height/10;
-		twoW = p.width/4;
-		twoH = p.height/5;
+		p.strokeWeight(1);
+		float volumeW = p.textWidth("Volume: ");
+		volW = p.width/20;
+		volH = p.width/20;
+		volY = volH + 2;
+		p.fill(125);
+		p.text("Volume: ", p.width/2 - (volumeW + volW)/2, volH + 2 + height);
+		if (checkMouse(2, p))
+			p.fill(125);
+		else 
+			p.fill(255);
+		p.rect(volX, volY, volW, volH);
 		
 		
 	}
+	
+	public void changeVolBy (int x) {
+		System.out.println("WHYAREYOURUNNING");
+		volX += x;
+	}
+	
 
 	
 	/**
 	 * 
-	 * @return 0 for no button pressed, 1 for music button pressed, 2 for button two pressed
+	 * @return 0 for no button pressed, 1 for music button pressed, 2 for volume button pressed
 	 */
 	public int mousePressed(PApplet p) {
 		if (checkMouse(1, p)) {
@@ -55,6 +73,7 @@ public class Options{
 			return 1;
 		}
 		if (checkMouse(2, p)) {
+			//volX = p.mouseX - volW/2;
 			return 2;
 		}
 		return 0;
@@ -70,10 +89,10 @@ public class Options{
 			w = musW;
 			h = musH;
 		} else if (button == 2) {
-			x = twoX;
-			y = twoY;
-			w = twoW;
-			h = twoH;
+			x = volX;
+			y = volY;
+			w = volW;
+			h = volH;
 		}
 		if (p.mouseX >= x && p.mouseX <= x + w && p.mouseY >= y && p.mouseY <= y + h)
 			return true;

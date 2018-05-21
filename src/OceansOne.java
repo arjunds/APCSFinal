@@ -22,6 +22,10 @@ public class OceansOne extends PApplet{
 		options = new Options(this);
 	}
 	
+	public void setup() {
+		options.setup(this);
+	}
+	
 	public void settings() {
 		  size(520, 390);
 	}
@@ -47,6 +51,17 @@ public class OceansOne extends PApplet{
 			}
 		}
 	}
+	
+	public void mouseDragged() {
+		if (curScreen == 1) {
+			if (options.mousePressed(this) == 2) {
+				System.out.println("HURRICANEKATRIIINAAAAMORELIKEHURRICANETORTILA");
+				options.changeVolBy(mouseX - pmouseX);
+				//adjust volume
+			}
+		}
+	}
+	
 	
 	public static void main(String args[]) {
 		OceansOne drawing = new OceansOne();
