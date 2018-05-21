@@ -13,7 +13,7 @@ import processing.core.PApplet;
 public class Main {
 	
 	public static void main(String args[]) {
-		OceansOne drawing = new OceansOne();
+		MazeSurface drawing = new MazeSurface();
 		PApplet.runSketch(new String[]{""}, drawing);
 		PSurfaceAWT surf = (PSurfaceAWT) drawing.getSurface();
 		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();

@@ -45,7 +45,7 @@ public class Maze {
 			while (bReader.readLine() != null) {
 				height ++;
 			}
-			System.out.println(width + " " + height);
+
 			contents = new Cell[width][height];
 			
 			int x = 0;
@@ -54,7 +54,7 @@ public class Maze {
 			reader = new FileReader(filename);
 			bReader = new BufferedReader(reader);
 			while ((line = bReader.readLine()) != null) {
-				while (line.indexOf(' ') != -1 && x < contents.length) {
+				while (line.indexOf(' ') != -1 && y < contents.length) {
 					String curr = line.substring(0, line.indexOf(' '));
 					line = line.substring(line.indexOf(' ') + 1);
 					boolean up, down, left, right;
@@ -78,11 +78,15 @@ public class Maze {
 					} else {
 						right = false;
 					}
-					contents[y][x] = new Cell(up, down, right, left, x, y);
-					x++;
+					contents[x][y] = new Cell(up, down, right, left, x, y);
+					y++;
+					if (!left && x == 0)
+						startPoint = y;
+					if (!right && x == contents[0].length - 1)
+						endPoint = y;
 				}
-				x = 0;
-				y++;
+				y = 0;
+				x++;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -106,27 +110,8 @@ public class Maze {
 	}
 
 	/*
-	 * (walls not spaces)
-	 * up: a
-	 * down: b
-	 * left: c
-	 * right: d
-	 * up down: e
-	 * up left: f
-	 * up right: g
-	 * down left: h
-	 * down right: i
-	 * left right: j
-	 * up down left: k
-	 * up down right: l
-	 * up left right: m
-	 * down left right: n
-	 * up down left right: o
-	 * 
-	 * or
-	 * 
 	 * four numbers
-	 * top bot left right
+	 * up down left right
 	 * 1/0 1/0  1/0  1/0
 	 * 1: wall
 	 * 0: path 

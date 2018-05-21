@@ -9,6 +9,7 @@ public class Junkyard {
 		m.writeMaze("IAINTGOTNOSLEEPCAUSAYAAAAALL");
 		Maze n = new Maze("IAINTGOTNOSLEEPCAUSAYAAAAALL");
 		n.writeMaze("YALLNEVAGONNASLEEPCAUSAMEEEE");
+		System.out.println(n.getStart() + " " + n.getEnd());
 		
 	}
 	
