@@ -32,15 +32,19 @@ public class Menu{
 	public void draw(PApplet p) {
 		loadBackground(filename, p);	
 		
-		oneX = p.width/2 - p.width/8;
-		oneY = p.height/4 - p.height/10;
-		oneW = p.width/4;
-		oneH = p.height/5;
-		twoX = p.width/2 - p.width/8;
-		twoY = p.height/4 * 3 - p.height/10;
-		twoW = p.width/4;
-		twoH = p.height/5;
+		int oneWidth = (int) p.textWidth("PLAY!");
+		int twoWidth = (int) p.textWidth("OPTIONS");
+		int height = (int) (p.textAscent() * 0.8);
 		
+		oneX = p.width/2 - oneWidth/2;
+		oneY = p.height/3;
+		oneW = oneWidth;
+		oneH = p.height/5;
+		twoX = p.width/2 - twoWidth/2;
+		twoY = p.height*2/3;
+		twoW = twoWidth;
+		twoH = p.height/5;
+		p.stroke(0);
 		p.fill(255);	
 		if (checkMouse(1, p)) {
 			p.fill(125);
@@ -51,6 +55,12 @@ public class Menu{
 			p.fill(125);
 		}
 		p.rect(twoX, twoY, twoW, twoH);
+		p.textSize(60);
+		p.fill(255, 0, 0);
+		p.text("OCEAN'S ONE", p.width/2 - p.textWidth("OCEAN'S ONE")/2, (float) (p.height/6 + p.textAscent()*0.8/2));
+		p.textSize(40);
+		p.text("PLAY!", oneX, oneY + oneH/2 + height/2);
+		p.text("OPTIONS", twoX, twoY + twoH/2 + height/2);
 	}
 
 	

@@ -23,7 +23,7 @@ public class OceansOne extends PApplet{
 	 * initializes the screens
 	 */
 	public OceansOne() {
-		menu = new Menu("bg.jpg");
+		menu = new Menu("backgroundImage.jpg");
 		options = new Options();
 		maze = new Maze(10, 10); // Switch to MazeScreen constructor
 	}

@@ -31,7 +31,7 @@ public class Options{
 	 * the method that draws all the sliders and buttons in their current state
 	 */
 	public void draw(PApplet p) {
-		p.background(0, 255, 0);
+		p.background(255, 0, 0);
 		p.textSize(p.width/20);
 		p.strokeWeight(1);
 		float height = (float) (p.textAscent() * 0.8);
@@ -42,8 +42,9 @@ public class Options{
 		musH = p.width/20;
 		musX = p.width/2 + (musicW - (musicW + musW)/2);
 		musY = 0;
-		p.fill(125);
+		p.fill(0);
 		p.text("Music: ", p.width/2 - (musicW + musW)/2, height);
+		p.fill(125);
 		if (checkMouse(1, p))
 			p.fill(125);
 		else 
@@ -78,8 +79,9 @@ public class Options{
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + volW/2, volY + volH/2, p.width*3/4 + volW/2, volY + volH/2);
 		p.strokeWeight(1);
-		p.fill(125);
+		p.fill(0);
 		p.text("Volume: ", p.width/2 - (volumeW + volW)/2, volY + height);
+		p.fill(125);
 		if (checkMouse(2, p))
 			p.fill(125);
 		else 
@@ -108,8 +110,9 @@ public class Options{
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + speedW/2, speedY + speedH/2, p.width*3/4 + speedW/2, speedY + speedH/2);
 		p.strokeWeight(1);
-		p.fill(125);
+		p.fill(0);
 		p.text("Speed: ", p.width/2 - (sW + speedW)/2, speedY + height);
+		p.fill(125);
 		if (checkMouse(3, p))
 			p.fill(125);
 		else 
@@ -122,8 +125,9 @@ public class Options{
 		distH = p.width/20;
 		distX = p.width/2 + (distortW - (distortW + distW)/2);
 		distY = speedY + speedH + space;
-		p.fill(125);
+		p.fill(0);
 		p.text("Distortion: ", p.width/2 - (distortW + distW)/2, distY + height);
+		p.fill(125);
 		if (checkMouse(4, p))
 			p.fill(125);
 		else 
@@ -142,8 +146,9 @@ public class Options{
 		fpsH = p.width/20;
 		fpsX = p.width/2 + (fpsBoxW - (fpsBoxW + fpsW)/2);
 		fpsY = distY + distH + space;
-		p.fill(125);
+		p.fill(0);
 		p.text("FPS shown: ", p.width/2 - (fpsBoxW + fpsW)/2, fpsY + height);
+		p.fill(125);
 		if (checkMouse(5, p))
 			p.fill(125);
 		else 
@@ -178,8 +183,9 @@ public class Options{
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + xsenW/2, xsenY + xsenH/2, p.width*3/4 + xsenW/2, xsenY + xsenH/2);
 		p.strokeWeight(1);
-		p.fill(125);
+		p.fill(0);
 		p.text("X Sensitivity: ", p.width/2 - (xW + xsenW)*2/3, xsenY + height);
+		p.fill(125);
 		if (checkMouse(6, p))
 			p.fill(125);
 		else 
@@ -208,8 +214,9 @@ public class Options{
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + ysenW/2, ysenY + ysenH/2, p.width*3/4 + ysenW/2, ysenY + ysenH/2);
 		p.strokeWeight(1);
-		p.fill(125);
+		p.fill(0);
 		p.text("Y Sensitivity: ", p.width/2 - (yW + ysenW)*2/3, ysenY + height);
+		p.fill(125);
 		if (checkMouse(7, p))
 			p.fill(125);
 		else 
