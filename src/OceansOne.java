@@ -58,12 +58,11 @@ public class OceansOne extends PApplet {
 	 */
 	public void draw() {
 		background((float) 200);
-//		if (curScreen == 0)
-//			menu.draw(this);
-//		else if (curScreen == 1)
-//			options.draw(this);
-//		else if (curScreen == 2)
-//		curScreen = 2;
+		if (curScreen == 0)
+			menu.draw(this);
+		else if (curScreen == 1)
+			options.draw(this);
+		else if (curScreen == 2)
 			maze.draw(this);
 	}
 
