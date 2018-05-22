@@ -4,29 +4,20 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import processing.core.PApplet;
 
 /**
  * 
- * @author rmuzaffar862
- * This class randomly generates and stores a maze in a 2D array of cell objects
+ * @author rmuzaffar862 This class randomly generates and stores a maze in a 2D
+ *         array of cell objects
  */
 public class Maze {
 
-
 	private Cell[][] contents;
 	private int startPoint, endPoint;
-	
-	/**
-	 * 
-	 * @param w the width of the maze (in cells)
-	 * @param h the height of the maze (in cells)
-	 * 
-	 * constructs a new randomly generated maze that is able to be drawn in 2D with the specified dimensions
-	 */
-	public Maze (int w, int h) {
+
+	public Maze(int w, int h) {
 		contents = new Cell[w][h];
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents[0].length; j++) {
@@ -34,32 +25,26 @@ public class Maze {
 			}
 		}
 		this.scrambleMaze();
-		startPoint = (int)(Math.random() * (contents[0].length -1)+ 0.5);
-		endPoint = (int)(Math.random() * (contents[0].length-1) + 0.5);
+		startPoint = (int) (Math.random() * (contents[0].length - 1) + 0.5);
+		endPoint = (int) (Math.random() * (contents[0].length - 1) + 0.5);
 		contents[0][startPoint].hasWallLeft = false;
 		contents[contents.length - 1][endPoint].hasWallRight = false;
 	}
 
-	/**
-	 * 
-	 * @param filename the file to be read from
-	 * 
-	 * constructs a new maze based on the specified file
-	 */
-	public Maze (String filename) {
+	public Maze(String filename) {
 
 		BufferedReader bReader = null;
 		try {
 			FileReader reader = new FileReader(filename);
 			bReader = new BufferedReader(reader);
-			int width = bReader.readLine().length()/5;
+			int width = bReader.readLine().length() / 5;
 			int height = 1;
 			while (bReader.readLine() != null) {
-				height ++;
+				height++;
 			}
 
 			contents = new Cell[width][height];
-			
+
 			int x = 0;
 			int y = 0;
 			String line;
@@ -109,61 +94,45 @@ public class Maze {
 			} catch (IOException exception) {
 				throw new IllegalArgumentException("you've really done it this time");
 			}
-		}	
+		}
 
 	}
-	
-	/**
-	 * 
-	 * @return the y value of the startpoint of the maze (the x value is always 0)
-	 */
-	public int getStart(){
+
+	public int getStart() {
 		return startPoint;
 	}
-	
-	/**
-	 * 
-	 * @return the y value of the enpoint of the maze (the x value is always contents.length - 1)
-	 */
-	public int getEnd(){
+
+	public int getEnd() {
 		return endPoint;
 	}
-	
-	/**
-	 * 
-	 * @param filename the file to be written to
-	 * 
-	 * writes the maze onto a file, with the column of cells containing the startpoint being printed as the first row
-	 * each cell is seperated from other cells by spaces and represented by four integers:
-	 * up  down left right
-	 * 1/0 1/0  1/0  1/0
-	 * 1: wall
-	 * 0: path 
+
+	/*
+	 * four numbers up down left right 1/0 1/0 1/0 1/0 1: wall 0: path
 	 */
-	public void writeMaze (String filename) {
-		FileWriter writer = null;		
+	public void writeMaze(String filename) {
+		FileWriter writer = null;
 		BufferedWriter bWriter = null;
 		try {
 			writer = new FileWriter(filename);
 			bWriter = new BufferedWriter(writer);
-			
+
 			for (Cell[] arr : contents) {
 				for (Cell c : arr) {
 					if (c.hasWallUp)
 						bWriter.write('1');
-					else 
+					else
 						bWriter.write('0');
 					if (c.hasWallDown)
 						bWriter.write('1');
-					else 
+					else
 						bWriter.write('0');
 					if (c.hasWallLeft)
 						bWriter.write('1');
-					else 
+					else
 						bWriter.write('0');
 					if (c.hasWallRight)
 						bWriter.write('1');
-					else 
+					else
 						bWriter.write('0');
 					bWriter.write(' ');
 				}
@@ -181,10 +150,7 @@ public class Maze {
 		}
 
 	}
-	
-	/**
-	 * This method sets the field contents to contain a randomly generated maze
-	 */
+
 	public void scrambleMaze() {
 		ArrayList<Cell> list = new ArrayList<Cell>();
 		Cell curr = contents[0][0];
@@ -200,23 +166,17 @@ public class Maze {
 				removeWall(curr, choice);
 
 				curr = choice;
-			} else if (list.size() > 0){
-				curr = list.get(list.size()-1);
+			} else if (list.size() > 0) {
+				curr = list.get(list.size() - 1);
 
-				list.remove(list.size()-1);
+				list.remove(list.size() - 1);
 			} else {
 				cont = false;
 			}
 		}
 
 	}
-	
-	/**
-	 * 
-	 * @param p the PApplet that the maze is being drawn on
-	 * 
-	 * this method draws the maze in the contents field in 2D
-	 */
+
 	public void draw(PApplet p) {
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents.length; j++) {
@@ -245,7 +205,7 @@ public class Maze {
 			b.hasWallUp = false;
 		}
 	}
-	
+
 	private Cell randNeighboor(Cell curr) {
 
 		ArrayList<Cell> neighboors = new ArrayList<Cell>();
@@ -253,43 +213,33 @@ public class Maze {
 		if (curr.getY() != 0) {
 			if (!contents[curr.getX()][curr.getY() - 1].beenVisited())
 				neighboors.add(contents[curr.getX()][curr.getY() - 1]);
-		} 		
+		}
 		if (curr.getY() != contents.length - 1) {
 			if (!contents[curr.getX()][curr.getY() + 1].beenVisited())
 				neighboors.add(contents[curr.getX()][curr.getY() + 1]);
-		} 		
+		}
 		if (curr.getX() != 0) {
 			if (!contents[curr.getX() - 1][curr.getY()].beenVisited())
 				neighboors.add(contents[curr.getX() - 1][curr.getY()]);
-		} 		
+		}
 		if (curr.getX() != contents[0].length - 1) {
 			if (!contents[curr.getX() + 1][curr.getY()].beenVisited())
 				neighboors.add(contents[curr.getX() + 1][curr.getY()]);
-		} 
+		}
 
 		if (neighboors.size() > 0) {
-			int choice = (int)(Math.random() * (neighboors.size()-1) + 0.5);
+			int choice = (int) (Math.random() * (neighboors.size() - 1) + 0.5);
 			return neighboors.get(choice);
 		} else {
 			return null;
 		}
 	}
 
-	/**
-	 * 
-	 * @param i the x value of the cell
-	 * @param j the y value of the cell
-	 * @return the cell at the spcified x and y value
-	 */
 	public Cell getCell(int i, int j) {
 		return contents[i][j];
 	}
-	
-	/**
-	 * 
-	 * @return the entire two dimensional array that is contained in the contents field
-	 */
-	public Cell[][] getContents(){
+
+	public Cell[][] getContents() {
 		return contents;
 	}
 

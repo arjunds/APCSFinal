@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 /**
@@ -30,6 +31,14 @@ public class Menu{
 	 * loads the background image and draws the buttons
 	 */
 	public void draw(PApplet p) {
+		p.pushMatrix();
+		p.pushStyle();
+		p.perspective(PConstants.PI/3, (float) p.width / (float) p.height,
+				10 * (float) ((p.height / 2.0) / Math.tan(Math.PI * 60.0 / 360.0)), 60f);
+		p.camera();
+		p.resetShader();
+		// stops the renderer from drawing things with depth(z-axis/3D)
+		p.hint(PApplet.DISABLE_DEPTH_TEST);
 		loadBackground(filename, p);	
 		
 		int oneWidth = (int) p.textWidth("PLAY!");
@@ -61,6 +70,9 @@ public class Menu{
 		p.textSize(40);
 		p.text("PLAY!", oneX, oneY + oneH/2 + height/2);
 		p.text("OPTIONS", twoX, twoY + twoH/2 + height/2);
+		p.hint(PApplet.ENABLE_DEPTH_TEST);
+		p.popMatrix();
+		p.popStyle();
 	}
 
 	

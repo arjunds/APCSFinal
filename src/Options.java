@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PConstants;
 
 /**
  * 
@@ -31,6 +32,12 @@ public class Options{
 	 * the method that draws all the sliders and buttons in their current state
 	 */
 	public void draw(PApplet p) {
+		p.perspective(PConstants.PI/3, (float) p.width / (float) p.height,
+				10 * (float) ((p.height / 2.0) / Math.tan(Math.PI * 60.0 / 360.0)), 60f);
+		p.camera();
+		p.resetShader();
+		// stops the renderer from drawing things with depth(z-axis/3D)
+		p.hint(PApplet.DISABLE_DEPTH_TEST);
 		p.background(255, 0, 0);
 		p.textSize(p.width/20);
 		p.strokeWeight(1);
@@ -233,9 +240,10 @@ public class Options{
 			p.fill(125);
 		else 
 			p.fill(255);
-		p.rect(backX, backY, backW, backH);
+		p.rect(backX, backY, backW+5, backH+5);
 		p.fill(0);
 		p.text("Back", backX, backY + backH - 2);
+		p.hint(PApplet.ENABLE_DEPTH_TEST);
 	}
 
 
