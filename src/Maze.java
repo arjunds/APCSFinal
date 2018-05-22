@@ -18,7 +18,14 @@ public class Maze {
 
 	private Cell[][] contents;
 	private int startPoint, endPoint;
-
+	
+	/**
+	 * 
+	 * @param w the width of the maze (in cells)
+	 * @param h the height of the maze (in cells)
+	 * 
+	 * constructs a new randomly generated maze that is able to be drawn in 2D with the specified dimensions
+	 */
 	public Maze (int w, int h) {
 		contents = new Cell[w][h];
 		for (int i = 0; i < contents.length; i++) {
@@ -33,7 +40,12 @@ public class Maze {
 		contents[contents.length - 1][endPoint].hasWallRight = false;
 	}
 
-
+	/**
+	 * 
+	 * @param filename the file to be read from
+	 * 
+	 * constructs a new maze based on the specified file
+	 */
 	public Maze (String filename) {
 
 		BufferedReader bReader = null;
@@ -101,17 +113,29 @@ public class Maze {
 
 	}
 	
+	/**
+	 * 
+	 * @return the y value of the startpoint of the maze (the x value is always 0)
+	 */
 	public int getStart(){
 		return startPoint;
 	}
 	
+	/**
+	 * 
+	 * @return the y value of the enpoint of the maze (the x value is always contents.length - 1)
+	 */
 	public int getEnd(){
 		return endPoint;
 	}
-
-	/*
-	 * four numbers
-	 * up down left right
+	
+	/**
+	 * 
+	 * @param filename the file to be written to
+	 * 
+	 * writes the maze onto a file, with the column of cells containing the startpoint being printed as the first row
+	 * each cell is seperated from other cells by spaces and represented by four integers:
+	 * up  down left right
 	 * 1/0 1/0  1/0  1/0
 	 * 1: wall
 	 * 0: path 
@@ -157,7 +181,10 @@ public class Maze {
 		}
 
 	}
-
+	
+	/**
+	 * This method sets the field contents to contain a randomly generated maze
+	 */
 	public void scrambleMaze() {
 		ArrayList<Cell> list = new ArrayList<Cell>();
 		Cell curr = contents[0][0];
@@ -183,7 +210,13 @@ public class Maze {
 		}
 
 	}
-
+	
+	/**
+	 * 
+	 * @param p the PApplet that the maze is being drawn on
+	 * 
+	 * this method draws the maze in the contents field in 2D
+	 */
 	public void draw(PApplet p) {
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents.length; j++) {
@@ -192,7 +225,6 @@ public class Maze {
 			}
 		}
 	}
-
 
 	private void removeWall(Cell a, Cell b) {
 
@@ -213,7 +245,7 @@ public class Maze {
 			b.hasWallUp = false;
 		}
 	}
-
+	
 	private Cell randNeighboor(Cell curr) {
 
 		ArrayList<Cell> neighboors = new ArrayList<Cell>();
@@ -243,11 +275,20 @@ public class Maze {
 		}
 	}
 
-
+	/**
+	 * 
+	 * @param i the x value of the cell
+	 * @param j the y value of the cell
+	 * @return the cell at the spcified x and y value
+	 */
 	public Cell getCell(int i, int j) {
 		return contents[i][j];
 	}
 	
+	/**
+	 * 
+	 * @return the entire two dimensional array that is contained in the contents field
+	 */
 	public Cell[][] getContents(){
 		return contents;
 	}

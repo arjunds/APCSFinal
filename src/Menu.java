@@ -1,16 +1,34 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * 
+ * @author rafeh
+ *
+ * This class draws the menu screen (including loading a background image) and keeps track of the state of its buttons
+ */
 public class Menu{
 
 	private float oneX, oneY, twoX, twoY;
 	private int oneW, oneH, twoW, twoH;
 	String filename;
 	
-	public Menu (PApplet p, String fn) {
+	/**
+	 * 
+	 * @param fn the filename of the background image
+	 * 
+	 * constructs a new Menu object with the background image being file with the given filename
+	 */
+	public Menu (String fn) {
 		filename = fn;
 	}
 	
+	/**
+	 * 
+	 * @param p the PApplet being drawn on
+	 * 
+	 * loads the background image and draws the buttons
+	 */
 	public void draw(PApplet p) {
 		loadBackground(filename, p);	
 		
