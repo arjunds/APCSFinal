@@ -12,6 +12,7 @@ public class Options{
 	private int musW, musH, volW, volH, speedW, speedH, distW, distH, fpsW, fpsH, xsenW, xsenH, ysenW, ysenH, backW, backH;
 	String filename;
 	private boolean music, volUnlocked, speedUnlocked, distorted, fps, xUnlocked, yUnlocked;
+	private double volRatio, speedRatio, xRatio, yRatio;
 	
 	/**
 	 * 
@@ -20,10 +21,14 @@ public class Options{
 	 */
 	public void setup(PApplet p) {
 		music = true;
-		volX = p.width/2 + (p.width/20 - (p.width/20 + volW)/2);
-		speedX = p.width/2 + (p.width/20 - (p.width/20 + speedW)/2);
-		xsenX = p.width/2 + (p.width/20 - (p.width/20 + xsenW)/2);
-		ysenX = p.width/2 + (p.width/20 - (p.width/20 + xsenW)/2);
+		volX = (p.width*4/7 + p.width*3/4)/2;
+		volRatio = p.width/volX;
+		speedX = (p.width*4/7 + p.width*3/4)/2;
+		speedRatio = p.width/speedX;
+		xsenX = (p.width*4/7 + p.width*3/4)/2;
+		xRatio = p.width/xsenX;
+		ysenX = (p.width*4/7 + p.width*3/4)/2;
+		yRatio = p.width/ysenX;
 	}
 	
 	/**
@@ -39,14 +44,14 @@ public class Options{
 		// stops the renderer from drawing things with depth(z-axis/3D)
 		p.hint(PApplet.DISABLE_DEPTH_TEST);
 		p.background(255, 0, 0);
-		p.textSize(p.width/20);
+		p.textSize(p.height/20);
 		p.strokeWeight(1);
 		float height = (float) (p.textAscent() * 0.8);
 		float space = (p.height - height * 7)/8;
 
 		float musicW = p.textWidth("Music: ");
 		musW = p.width/20;
-		musH = p.width/20;
+		musH = p.height/20;
 		musX = p.width/2 + (musicW - (musicW + musW)/2);
 		musY = 0;
 		p.fill(0);
@@ -66,7 +71,7 @@ public class Options{
 
 		float volumeW = p.textWidth("Volume: ");
 		volW = p.width/20;
-		volH = p.width/20;
+		volH = p.height/20;
 		volY = musY + musH + space;
 		if (volUnlocked) {
 			int difference;
@@ -82,13 +87,14 @@ public class Options{
 				volX = p.mouseX - volW/2;
 				difference = p.mouseX - p.pmouseX;
 			}
+		} else {
+			volX = (float) (p.width / volRatio);
 		}
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + volW/2, volY + volH/2, p.width*3/4 + volW/2, volY + volH/2);
 		p.strokeWeight(1);
 		p.fill(0);
 		p.text("Volume: ", p.width/2 - (volumeW + volW)/2, volY + height);
-		p.fill(125);
 		if (checkMouse(2, p))
 			p.fill(125);
 		else 
@@ -97,7 +103,7 @@ public class Options{
 
 		float sW = p.textWidth("Speed: ");
 		speedW = p.width/20;
-		speedH = p.width/20;
+		speedH = p.height/20;
 		speedY = volY + volH + space;
 		if (speedUnlocked) {
 			int difference;
@@ -113,6 +119,8 @@ public class Options{
 				speedX = p.mouseX - speedW/2;
 				difference = p.mouseX - p.pmouseX;
 			}
+		} else {
+			speedX = (float) (p.width / speedRatio);
 		}
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + speedW/2, speedY + speedH/2, p.width*3/4 + speedW/2, speedY + speedH/2);
@@ -129,7 +137,7 @@ public class Options{
 		p.strokeWeight(1);
 		float distortW = p.textWidth("Distortion: ");
 		distW = p.width/20;
-		distH = p.width/20;
+		distH = p.height/20;
 		distX = p.width/2 + (distortW - (distortW + distW)/2);
 		distY = speedY + speedH + space;
 		p.fill(0);
@@ -150,7 +158,7 @@ public class Options{
 		p.strokeWeight(1);
 		float fpsBoxW = p.textWidth("FPS shown: ");
 		fpsW = p.width/20;
-		fpsH = p.width/20;
+		fpsH = p.height/20;
 		fpsX = p.width/2 + (fpsBoxW - (fpsBoxW + fpsW)/2);
 		fpsY = distY + distH + space;
 		p.fill(0);
@@ -170,7 +178,7 @@ public class Options{
 
 		float xW = p.textWidth("X Sensitivity: ");
 		xsenW = p.width/20;
-		xsenH = p.width/20;
+		xsenH = p.height/20;
 		xsenY = fpsY + fpsH + space;
 		if (xUnlocked) {
 			int difference;
@@ -186,6 +194,8 @@ public class Options{
 				xsenX = p.mouseX - xsenW/2;
 				difference = p.mouseX - p.pmouseX;
 			}
+		} else {
+			xsenX = (float) (p.width / xRatio);
 		}
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + xsenW/2, xsenY + xsenH/2, p.width*3/4 + xsenW/2, xsenY + xsenH/2);
@@ -201,7 +211,7 @@ public class Options{
 		
 		float yW = p.textWidth("Y Sensitivity: ");
 		ysenW = p.width/20;
-		ysenH = p.width/20;
+		ysenH = p.height/20;
 		ysenY = xsenY + xsenH + space;
 		if (yUnlocked) {
 			int difference;
@@ -217,6 +227,8 @@ public class Options{
 				ysenX = p.mouseX - ysenW/2;
 				difference = p.mouseX - p.pmouseX;
 			}
+		} else {
+			ysenX = (float) (p.width / yRatio);
 		}
 		p.strokeWeight(5);
 		p.line(p.width*4/7 + ysenW/2, ysenY + ysenH/2, p.width*3/4 + ysenW/2, ysenY + ysenH/2);
@@ -233,7 +245,7 @@ public class Options{
 		p.strokeWeight(1);
 		float bW = p.textWidth("Back");
 		backW = (int) bW;
-		backH = p.width/20;
+		backH = p.height/20;
 		backX = p.width/2 - backW/2;
 		backY = ysenY + space;
 		if (checkMouse(8, p))
@@ -349,6 +361,16 @@ public class Options{
 	
 	/**
 	 * 
+	 * @param ratio the number that the volRatio is set to
+	 * 
+	 * this method is called when volume is being unlocked
+	 */
+	public void calcVolRatio(PApplet p) {
+		volRatio = p.width/volX;
+	}
+	
+	/**
+	 * 
 	 * @return returns the state of the speedUnlocked field
 	 */
 	public boolean isSpeedUnlocked() {
@@ -361,6 +383,16 @@ public class Options{
 	 */
 	public void setSpeedUnlocked(boolean speedUnlocked) {
 		this.speedUnlocked = speedUnlocked;
+	}
+	
+	/**
+	 * 
+	 * @param ratio the number that the speedRatio is set to
+	 * 
+	 * this method is called when speed is being unlocked
+	 */
+	public void calcSpeedRatio(PApplet p) {
+		speedRatio = p.width/speedX;
 	}
 	
 	/**
@@ -381,6 +413,16 @@ public class Options{
 	
 	/**
 	 * 
+	 * @param ratio the number that the xRatio is set to
+	 * 
+	 * this method is called when x sensitivity is being unlocked
+	 */
+	public void calcXRatio(PApplet p) {
+		xRatio = p.width/xsenX;
+	}
+	
+	/**
+	 * 
 	 * @return returns the state of the yUnlocked field
 	 */
 	public boolean isyUnlocked() {
@@ -393,6 +435,16 @@ public class Options{
 	 */
 	public void setyUnlocked(boolean yUnlocked) {
 		this.yUnlocked = yUnlocked;
+	}
+	
+	/**
+	 * 
+	 * @param ratio the number that the yRatio is set to
+	 * 
+	 * this method is called when y sensitivity is being unlocked
+	 */
+	public void calcYRatio(PApplet p) {
+		yRatio = p.width/ysenX;
 	}
 	
 	/**
