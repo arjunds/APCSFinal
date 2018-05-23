@@ -41,6 +41,9 @@ public class MazeScreen {
 	// used for the fading in/out text
 	private float speed, value;
 	private int MAX;
+	
+	//used for pause buttons
+	private int mainX, mainY, mainW, mainH, resX, resY, resW, resH, optX, optY, optW, optH;
 
 	public void setup(PApplet g) {
 		speed = 1.2f;
@@ -68,7 +71,7 @@ public class MazeScreen {
 		bgMusic[1] = m.loadFile("data/sound/bgMusic2.mp3");
 		bgMusic[2] = m.loadFile("data/sound/bgMusic3.mp3");
 		currentSong = (int) (Math.random() * 3);
-		bgMusic[currentSong].play();
+		//bgMusic[currentSong].play();
 
 		distort = g.loadShader("data/images/deform.glsl");
 		PShape pgun = g.loadShape("data/images/pgun.obj");
@@ -279,12 +282,11 @@ public class MazeScreen {
 
 		// gives the background a nice sky blue color
 		g.background(126, 192, 238);
-
-		if (!bgMusic[currentSong].isPlaying()) {
-			bgMusic[currentSong].rewind();
-			currentSong = (int) (Math.random() * 3);
-			bgMusic[currentSong].play();
-		}
+//		if (!bgMusic[currentSong].isPlaying()) {
+//			bgMusic[currentSong].rewind();
+//			currentSong = (int) (Math.random() * 3);
+//			bgMusic[currentSong].play();
+//		}
 
 		// starts the timer in draw() as opposed to setup() to get the most accurate
 		// start time
@@ -372,9 +374,55 @@ public class MazeScreen {
 		g.hint(PApplet.DISABLE_DEPTH_TEST);
 		g.imageMode(PApplet.CENTER);
 		g.image(crosshairs, g.width / 2, g.height / 2);
+
+		if (paused) {
+			g.pushMatrix();
+			g.pushStyle();
+			g.background(255,0,0);
+			if (mouseOn(g, 0))
+				g.fill(125);
+			else 
+				g.fill(255);
+			mainX = g.width/7;
+			mainY = g.height*8/10;
+			mainW = g.width/7;
+			mainH = g.height/10;
+			g.rect(mainX, mainY, mainW, mainH);
+			g.fill(0);
+			g.text("Main Menu", mainX + (mainW - g.textWidth("Main Menu"))/2, mainY + (mainH - g.textAscent())/2 + g.textAscent());
+			if (mouseOn(g, 1))
+				g.fill(125);
+			else 
+				g.fill(255);
+			resX = g.width*3/7;
+			resY = g.height*8/10;
+			resW = g.width/7;
+			resH = g.height/10;
+			if (!finished) {
+				g.rect(resX, resY, resW, resH);
+			g.fill(0);
+			g.text("Resume!", resX + (resW - g.textWidth("Resume!"))/2, resY + (resH - g.textAscent())/2 + g.textAscent());
+			}
+			if (mouseOn(g, 2))
+				g.fill(125);
+			else 
+				g.fill(255);
+			optX = g.width*5/7;
+			optY = g.height*8/10;
+			optW = g.width/7;
+			optH = g.height/10;
+			g.rect(optX, optY, optW, optH);
+			g.fill(0);
+			g.text("Options", optX + (optW - g.textWidth("Options"))/2, optY + (optH - g.textAscent())/2 + g.textAscent());
+			g.popMatrix();
+			g.popStyle();
+		}
 		if (finished) {
 			g.textSize(60);
 			g.text("The End!", g.width / 2 - g.textWidth("The End!") / 2, g.height / 2 - g.textAscent());
+		} else if (paused) {
+			g.textSize(60);
+			g.text("Paused", g.width / 2 - g.textWidth("Paused") / 2, g.height / 2 - g.textAscent());
 		}
 		if (dead) {
 			g.textSize(60);
@@ -437,6 +485,39 @@ public class MazeScreen {
 						(int) ((GLWindow) g.getSurface().getNative()).getY() + g.height / 2);
 			}
 		}
+	}
+	
+	/*
+	 * checks if mouse is hovering over specified button in the pause menu
+	 * 0 = far left (main menu)
+	 * 1 = middle (resume!)
+	 * 2 = right (options)
+	 */
+	private boolean mouseOn(PApplet g, int button) {
+		if (button == 0) {
+			if (g.mouseX > mainX && g.mouseX < mainX + mainW && g.mouseY > mainY && g.mouseY < mainY + mainH)
+				return true;
+		} else if (button == 1) {
+			if (g.mouseX > resX && g.mouseX < resX + resW && g.mouseY > resY && g.mouseY < resY + mainH)
+				return true;
+		} else if (button == 2) {
+			if (g.mouseX > optX && g.mouseX < optX + optW && g.mouseY > optY && g.mouseY < optY + mainH)
+				return true;
+		}
+		return false;
+	}
+	
+	public int mousePressed(PApplet g) {
+		if (mouseOn(g, 0)) {
+			return 0;
+		}
+		if (mouseOn(g, 1)) {
+			return 1;
+		}
+		if (mouseOn(g, 2)) {
+			return 2;
+		}
+		return -1;
 	}
 
 	// Adds the key to the array list
@@ -615,5 +696,14 @@ public class MazeScreen {
 				variance = PVector.sub(center, pos);
 			}
 		}
+	}
+
+	public boolean isPaused() {
+		// TODO Auto-generated method stub
+		return paused;
+	}
+	
+	public void switchPause(PApplet p) {
+		pauseGame(p);
 	}
 }

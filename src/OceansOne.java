@@ -6,8 +6,8 @@ import processing.opengl.PJOGL;
  * 
  * @author rafeh
  *
- *         This class contains the main method, and also is the class that has
- *         the PApplet
+ * This class contains the main method, and also is the class that has
+ * the PApplet
  */
 public class OceansOne extends PApplet {
 
@@ -16,6 +16,7 @@ public class OceansOne extends PApplet {
 	private MazeScreen maze;
 
 	private int curScreen;
+	private int prevScreen;
 
 	/**
 	 * initializes the screens
@@ -108,17 +109,35 @@ public class OceansOne extends PApplet {
 	 */
 	public void mouseReleased() {
 		options.setVolUnlocked(false);
+		options.calcVolRatio(this);
 		options.setSpeedUnlocked(false);
+		options.calcSpeedRatio(this);
 		options.setxUnlocked(false);
+		options.calcXRatio(this);
 		options.setyUnlocked(false);
-		if(curScreen == 2)
-			maze.mouseClicked(this);
-		if (curScreen == 0) {
+		options.calcYRatio(this);
+		if (curScreen == 2) {
+			if (!maze.isPaused())
+				maze.mouseClicked(this);
+			else {
+				int button = maze.mousePressed(this);
+				if (button == 0) {
+					curScreen = 0;
+				} else if (button == 1) {
+					maze.switchPause(this);
+				} else if (button == 2) {
+					prevScreen = curScreen;
+					curScreen = 1;
+				}
+			}
+		} if (curScreen == 0) {
 			int button = menu.mousePressed(this);
 			if (button == 1) {
+				prevScreen = curScreen;
 				curScreen = 2;
 			}
 			if (button == 2) {
+				prevScreen = curScreen;
 				curScreen = 1;
 			}
 		} else if (curScreen == 1) {
@@ -136,14 +155,14 @@ public class OceansOne extends PApplet {
 				// switch fps display
 			}
 			if (button == 8) {
-				curScreen = 0;
+				curScreen = prevScreen;
 			}
 		}
 	}
 
 	/**
 	 * @param args
-	 *            the main method
+	 * the main method
 	 */
 	public static void main(String args[]) {
 //		OceansOne drawing = new OceansOne();
